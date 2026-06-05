@@ -1,4 +1,9 @@
 # Enterprise Document Intelligence System
+<p align="center">
+  <img src="image.png" width="1000">
+</p>
+
+
 
 ## Overview
 
