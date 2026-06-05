@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enterprise Document Intelligence System</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #answer-box {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f8f8f8;
+            min-height: 100px;
+            white-space: pre-wrap;
+        }
+
+        .loading {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Enterprise Document Intelligence System</h1>
+
+    <h3>Ask a Question</h3>
+
+    <textarea
+        id="question"
+        placeholder="Enter your question here..."
+    ></textarea>
+
+    <br>
+
+    <button onclick="askQuestion()">
+        Ask
+    </button>
+
+    <div id="answer-box">
+        Answer will appear here...
+    </div>
+
+    <script>
+
+        async function askQuestion() {
+
+            const question = document.getElementById(
+                "question"
+            ).value;
+
+            const answerBox = document.getElementById(
+                "answer-box"
+            );
+
+            answerBox.innerHTML =
+                "<span class='loading'>Generating answer...</span>";
+
+            try {
+
+                const response = await fetch(
+                    "http://127.0.0.1:8001/ask/",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            question: question
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (response.ok) {
+
+                    answerBox.innerText =
+                        data.answer;
+
+                } else {
+
+                    answerBox.innerText =
+                        "Error: " + data.error;
+                }
+
+            } catch (error) {
+
+                answerBox.innerText =
+                    "Error: " + error.message;
+            }
+        }
+
+    </script>
+
+</body>
+</html>

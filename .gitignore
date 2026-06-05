@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+
+.env
+
+db.sqlite3
+
+media/
+
+faiss_index/
+
+.venv/
+venv/
+
+.DS_Store
